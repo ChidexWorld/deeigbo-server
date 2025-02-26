@@ -16,11 +16,21 @@ app.use(morgan("dev"));
 app.use(compression());
 app.use(helmet());
 app.use(express.json());
-app.use(cors()); // Allow Next.js frontend
-// app.use(cors({ origin: "https://example.com" }));
+app.use(
+  cors({
+    origin: "*", // Allow all origins (for development)
+    methods: ["GET", "POST", "DELETE"],
+    allowedHeaders: ["Content-Type"],
+  })
+);// app.use(cors({ origin: "https://example.com" }));
 
 
-app.use("/audio", express.static(path.join(__dirname, "audio")));
+// Serve static files from "/audio" folder
+app.use("/audio", express.static("audio", {
+    setHeaders: (res) => {
+        res.set("Cross-Origin-Resource-Policy", "cross-origin");
+    }
+}));
 
 // Define a simple route
 app.get("/", (req, res) => {
@@ -93,7 +103,7 @@ app.post("/tts", async (req, res) => {
         if (err) console.error("Error deleting file:", err);
         else console.log(`Deleted: ${fileName}`);
       });
-    }, 30000); // 30 seconds
+    }, 120000); // 30 seconds
 
   } catch (error) {
     console.error("TTS Error:", error.message);
