@@ -10,10 +10,11 @@ const morgan = require("morgan");
 
 const PORT = process.env.PORT;
 
+const app = express();
+
 app.use(morgan("dev"));
 app.use(compression());
 app.use(helmet());
-const app = express();
 app.use(express.json());
 app.use(cors()); // Allow Next.js frontend
 // app.use(cors({ origin: "https://example.com" }));
