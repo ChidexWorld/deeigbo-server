@@ -4,12 +4,20 @@ const cors = require("cors");
 const axios = require("axios");
 const fs = require("fs");
 const path = require("path");
+const helmet = require("helmet");
+const compression = require("compression");
+const morgan = require("morgan");
 
 const PORT = process.env.PORT;
 
+app.use(morgan("dev"));
+app.use(compression());
+app.use(helmet());
 const app = express();
 app.use(express.json());
 app.use(cors()); // Allow Next.js frontend
+// app.use(cors({ origin: "https://example.com" }));
+
 
 app.use("/audio", express.static(path.join(__dirname, "audio")));
 
