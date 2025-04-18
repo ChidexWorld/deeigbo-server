@@ -52,8 +52,8 @@ Convert text to speech (Igbo & English via Hugging Face).
 #### Request:
 ```json
 {
-  "text": "Ndewo",
-  "language": "ig"
+  "text": "How are you",
+  "language": "en"
 }
 ```
 #### Response:
